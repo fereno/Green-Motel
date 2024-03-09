@@ -1,4 +1,10 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
+import { formatCurrency } from "../../utils/helpers";
+import Row from "../../ui/Row";
+import CreateCabinForm from "./CreateCabinForm";
+import { useState } from "react";
+import { useDeleteCabin } from "./UseDeleteCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -36,5 +42,56 @@ const Price = styled.div`
 const Discount = styled.div`
   font-family: "Sono";
   font-weight: 500;
+
   color: var(--color-green-700);
 `;
+
+const CabinRow = ({ cabin }) => {
+  const [showForm, setShowForm] = useState(false);
+
+  const {
+    id: cabinId,
+    name,
+    maxCapacity,
+    image,
+    discount,
+    regularPrice,
+  } = cabin;
+
+  const { isDeleting, deleteCabin } = useDeleteCabin();
+
+  return (
+    <>
+      <TableRow role="table">
+        <Img src={image} />
+        <Cabin>{name}</Cabin>
+        <div>Fits up to {maxCapacity} guests</div>
+        <Price>{formatCurrency(regularPrice)}</Price>
+        {discount === 0 ? (
+          "__"
+        ) : (
+          <Discount>{formatCurrency(discount)}</Discount>
+        )}{" "}
+        <Row type="horizontal">
+          <button
+            onClick={() => setShowForm((show) => !show)}
+            disabled={isDeleting}
+          >
+            Edit
+          </button>
+          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
+            Delete
+          </button>
+        </Row>
+      </TableRow>
+      {showForm && (
+        <CreateCabinForm
+          cabinToEdit={cabin}
+          onCancel={() => setShowForm(false)}
+        />
+      )}
+    </>
+  );
+};
+
+export default CabinRow;
