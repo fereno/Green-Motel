@@ -1,13 +1,10 @@
 import CreateCabinForm from "./CreateCabinForm";
-import CabinTable from "./CabinTable";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 
 const AddCabin = () => {
-  //const [isOpenModal, setISOpenModal] = useState(false);
-
   return (
-    <>
+    <div>
       <Modal>
         <Modal.Open opens="cabin-form">
           <Button>Add new Cabin</Button>
@@ -16,16 +13,7 @@ const AddCabin = () => {
           <CreateCabinForm />
         </Modal.Window>
       </Modal>
-
-      <Modal>
-        <Modal.Open opens="table">
-          <Button>cabin table</Button>
-        </Modal.Open>
-        <Modal.Window name="table">
-          <CabinTable />
-        </Modal.Window>
-      </Modal>
-    </>
+    </div>
   );
 
   // return (

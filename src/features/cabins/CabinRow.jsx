@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import Row from "../../ui/Row";
 import CreateCabinForm from "./CreateCabinForm";
-import { useState } from "react";
 import { useDeleteCabin } from "./UseDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateCabin } from "./useCreateCabin";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -49,7 +50,7 @@ const Discount = styled.div`
 `;
 
 const CabinRow = ({ cabin }) => {
-  const [showForm, setShowForm] = useState(false);
+  //const [showForm, setShowForm] = useState(false);
 
   const {
     id: cabinId,
@@ -88,23 +89,43 @@ const CabinRow = ({ cabin }) => {
           <button onClick={handelDuplicate} disabled={isCreating}>
             <HiSquare2Stack />
           </button>
-          <button
+          {/* <button
             onClick={() => setShowForm((show) => !show)}
             disabled={isDeleting}
           >
             <HiPencil />
-          </button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
+          </button> */}
+
+          <Modal>
+            <Modal.Open opens="edit">
+              <button disabled={isDeleting}>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                onConfirm={() => deleteCabin(cabinId)}
+                disabled={isDeleting}
+              />
+            </Modal.Window>
+          </Modal>
         </Row>
       </TableRow>
-      {showForm && (
+      {/* {showForm && (
         <CreateCabinForm
           cabinToEdit={cabin}
           onCancel={() => setShowForm(false)}
         />
-      )}
+      )} */}
     </>
   );
 };
