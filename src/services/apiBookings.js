@@ -5,7 +5,7 @@ import supabase from "./supabase";
 
 
 export async function getBookings() {
-  const { data, error } = await supabase.from("bookings").select("* , cabins(name),guests(fullName, email)");
+  const { data, error } = await supabase.from("bookings").select("id ,created_at,startDate,endDate, numNights, numGuests, totalPrice, status , cabins(name),guests(fullName, email)");
   if (error) {
     console.error(error);
     throw new Error("Bookings could not be loaded");
@@ -15,7 +15,7 @@ export async function getBookings() {
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
-    .select(" id ,created_at,startDate,endDate, numNights, numGuests, totalPrice, status, cabins(*), guests(*)")
+    .select(" *, cabins(*), guests(*)")
     .eq("id", id)
     .single();
 
