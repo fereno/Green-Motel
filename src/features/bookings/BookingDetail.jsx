@@ -24,7 +24,7 @@ function BookingDetail() {
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  console.log("BookingDetailbooking", booking);
+  console.log("Booking Detail ", booking);
 
   if (isLoading) return <Spinner />;
 
@@ -52,7 +52,7 @@ function BookingDetail() {
         {status === "unconfirmed" && (
           <Button
             variation="primary"
-            onClick={() => navigate(`/chechin/${bookingId}`)}
+            onClick={() => navigate(`/checkin/${bookingId}`)}
           >
             Check in
           </Button>
