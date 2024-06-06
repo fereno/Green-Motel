@@ -20,3 +20,24 @@ export async function getCurrentUser() {
   if (error) throw new Error(error.message);
   return data?.user;
 }
+
+export async function logOut() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
+}
+
+export async function SignUp({email, password, fullName}) {
+  const { error, data } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        fullName,
+        avatar: "",
+      },
+    },
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
+}

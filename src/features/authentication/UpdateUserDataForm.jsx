@@ -18,6 +18,7 @@ function UpdateUserDataForm() {
   } = useUser();
 
   const [fullName, setFullName] = useState(currentFullName);
+  // eslint-disable-next-line no-unused-vars
   const [avatar, setAvatar] = useState(null);
 
   function handleSubmit(e) {
