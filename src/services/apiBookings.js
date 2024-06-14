@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
-import supabase from "./supabase";
+import supabase from "./supaBase";
 
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
@@ -42,9 +42,7 @@ export async function getBooking(id) {
     .eq("id", id)
     .single();
 
-    // console.log("getBooking data>>>", data);
   if (error) {
-    // console.log("getBooking error>>>", error);
 
     console.error(error);
     throw new Error("Booking not found");
@@ -66,8 +64,8 @@ export async function getBookingsAfterDate(date) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-
   return data;
+
 }
 
 // Returns all STAYS that are were created after the given date
@@ -105,6 +103,8 @@ export async function getStaysTodayActivity() {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
+
+  console.log("d",data)
   return data;
 }
 

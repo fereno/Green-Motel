@@ -84,10 +84,12 @@ const Menus = ({ children }) => {
 
 const List = ({ children, id }) => {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close)
+  const ref = useOutsideClick(close,false);
   if (openId !== id) return null;
   return createPortal(
-    <StyledList ref={ref} position={position}>{children}</StyledList>,
+    <StyledList ref={ref} position={position}>
+      {children}
+    </StyledList>,
     document.body
   );
 };
@@ -111,8 +113,8 @@ const Button = ({ children, icon, onClick }) => {
 const Toggle = ({ id }) => {
   const { openId, close, open, setPosition } = useContext(MenusContext);
   const handleClick = (e) => {
-    console.log("openId", openId);
-    console.log("id", id);
+    e.stopPropagation(); //* Know about bubbling and capturing in js
+
     openId === "" || openId !== id ? open(id) : close();
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
